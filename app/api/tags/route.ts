@@ -23,7 +23,7 @@ export async function POST(request: Request) {
     });
 
     const text = completion.choices[0]?.message?.content || '[]';
-    const jsonMatch = text.match(/\[.*\]/s);
+    const jsonMatch = text.match(/\[[\s\S]*\]/);
     const tags = jsonMatch ? JSON.parse(jsonMatch[0]) : [];
 
     return NextResponse.json({ tags });
