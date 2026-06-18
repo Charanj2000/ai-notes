@@ -27,7 +27,7 @@ export async function POST(request: Request) {
     const tags = jsonMatch ? JSON.parse(jsonMatch[0]) : [];
 
     return NextResponse.json({ tags });
-  } catch (_error) {
+  } catch {
     return NextResponse.json({ tags: [] });
   }
 }

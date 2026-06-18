@@ -14,6 +14,7 @@ const NoteEditor = () => {
     if (activeNote && titleRef.current) {
       titleRef.current.value = activeNote.title;
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [activeNoteId]);
 
   if (!activeNote) {
@@ -36,15 +37,12 @@ const NoteEditor = () => {
     if (!activeNote.content || activeNote.content.length < 10) return;
     setIsSummarizing(true);
     try {
-      console.log("Fetching summarize...");
       const res = await fetch("/api/summarize", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ content: activeNote.content }),
       });
-      console.log("Response status:", res.status);
       const data = await res.json();
-      console.log("Response data:", data);
       if (data.summary) {
         updateNote(activeNote.id, { summary: data.summary });
       }
@@ -73,7 +71,6 @@ const NoteEditor = () => {
 
   return (
     <div className="flex flex-col h-full">
-      {/* Header */}
       <div className="flex items-center justify-between px-6 py-4 border-b border-white/5">
         <input
           ref={titleRef}
@@ -100,7 +97,6 @@ const NoteEditor = () => {
         </div>
       </div>
 
-      {/* Tags */}
       {activeNote.tags.length > 0 && (
         <div className="flex gap-2 px-6 py-2 border-b border-white/5 flex-wrap">
           {activeNote.tags.map((tag) => (
@@ -114,7 +110,6 @@ const NoteEditor = () => {
         </div>
       )}
 
-      {/* Summary */}
       {activeNote.summary && (
         <div className="mx-6 mt-4 p-4 rounded-xl bg-indigo-500/5 border border-indigo-500/20">
           <p className="text-xs text-indigo-400 font-medium mb-1">
@@ -126,7 +121,6 @@ const NoteEditor = () => {
         </div>
       )}
 
-      {/* Editor */}
       <textarea
         value={activeNote.content}
         onChange={(e) => updateNote(activeNote.id, { content: e.target.value })}

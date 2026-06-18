@@ -19,7 +19,7 @@ interface NotesStore {
 
 export const useNotesStore = create<NotesStore>()(
   persist(
-    (set, get) => ({
+    (set) => ({
       notes: [],
       activeNoteId: null,
       messages: [],
@@ -61,13 +61,8 @@ export const useNotesStore = create<NotesStore>()(
       },
 
       setActiveNote: (id) => set({ activeNoteId: id }),
-
-      addMessage: (message) => {
-        set(state => ({ messages: [...state.messages, message] }));
-      },
-
+      addMessage: (message) => set(state => ({ messages: [...state.messages, message] })),
       clearMessages: () => set({ messages: [] }),
-
       toggleChat: () => set(state => ({ isChatOpen: !state.isChatOpen })),
     }),
     {
